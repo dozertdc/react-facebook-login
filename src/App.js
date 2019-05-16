@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import firebase from "firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
-import { FirebaseAuth } from 'react-firebaseui';
 
 firebase.initializeApp({
   apiKey: "AIzaSyAaa6m_sfNDDulf-zEwNzdBoVHxPi3cHc0",
@@ -17,14 +16,14 @@ class App extends React.Component {
       firebase.auth.FacebookAuthProvider.PROVIDER_ID
     ],
     callbacks: {
-      signInSuccess: () => false
+      signInSuccessWithAuthResult: () => false
     }
   };
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       this.setState({
-        isSignedIn: !!user
+        isSignedIn: user
       });
       console.log(user);
     });
@@ -39,7 +38,7 @@ class App extends React.Component {
           <button onClick={ () => firebase.auth().signOut() }>Sign Out</button>
           <h1>{firebase.auth().currentUser.displayName}</h1>
           <img
-            alt="profile picture"
+            alt="facebook profile"
             src={firebase.auth().currentUser.photoURL}
           />
         </div>
